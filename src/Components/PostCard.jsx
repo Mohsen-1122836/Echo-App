@@ -21,7 +21,6 @@ export default function PostCard({ post, length, callback }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const inputRef = useRef(null);
   const { userData } = useContext(AuthContext);
-  
 
   async function createComment(e) {
     e.preventDefault();
@@ -67,7 +66,11 @@ export default function PostCard({ post, length, callback }) {
             )}
           </div>
 
-          <PostBody body={post?.body} image={post?.image} name={post?.user?.name} />
+          <PostBody
+            body={post?.body}
+            image={post?.image}
+            name={post?.user?.name}
+          />
 
           <PostFooter
             postId={post.id}
@@ -90,21 +93,30 @@ export default function PostCard({ post, length, callback }) {
                 />
               ))}
 
-          <form onSubmit={createComment} className="flex gap-2 py-6">
+          <form
+            onSubmit={createComment}
+            className="flex items-center gap-2 py-4 w-full"
+          >
             <Input
               ref={inputRef}
               value={commentContent}
               onChange={(e) => setCommentContent(e.target.value)}
               variant="bordered"
               placeholder="Add a comment..."
+              className="flex-1 text-sm sm:text-base"
             />
             <Button
               isLoading={loading}
               type="submit"
               disabled={commentContent.length < 2}
-              className="bg-blue-500 text-white"
+              className="bg-blue-500 text-white 
+               text-xs sm:text-sm font-medium
+               px-2 sm:px-4 py-1.5 sm:py-2 
+               rounded-lg shadow-sm
+               hover:bg-blue-600 transition"
             >
-              Add Comment
+              <span className="block sm:hidden">Add</span>
+              <span className="hidden sm:block">Add Comment</span>
             </Button>
           </form>
         </div>

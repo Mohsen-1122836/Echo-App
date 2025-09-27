@@ -22,12 +22,18 @@ export default function PostDetails() {
 
   return (
     <>
-      <div className="w-4/6 mx-auto">
-        {post
-          ? <PostCard post={post} length={post.comments.length} callback={getPost} />
-          : <LoadingScreen />
-        }
-
+      <div className="dark:bg-gray-900 container mx-auto px-4 min-h-screen flex  justify-center">
+        <div className="w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-3/5 h-full">
+          {post ? (
+            <PostCard
+              post={post}
+              length={post.comments.length}
+              callback={getPost}
+            />
+          ) : (
+            <LoadingScreen />
+          )}
+        </div>
       </div>
     </>
   );

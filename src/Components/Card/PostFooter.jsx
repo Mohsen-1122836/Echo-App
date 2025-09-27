@@ -54,51 +54,89 @@ export default function PostFooter({ length, postId , inputRef }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 w-full px-5 border-t border-divider pt-4 my-3 ">
-       <div className="relative group">
-         <button className="flex flex-row justify-center items-center w-full space-x-3 ">
-         {reaction === "like" ? (
-  <div className="flex">
-    <AiFillLike className="text-blue-600 pe-0.5" size={28}/>
-    <span className="font-semibold text-lg text-gray-600">Like</span>
-  </div>
-) : reaction === "love" ? (
-  <div className="flex">
-    <AiFillHeart className="text-red-600" size={28}/>
-    <span className="font-semibold text-lg text-gray-600">Love</span>
-  </div>
-) : (
-  <div className="flex hover:**:text-blue-600 hover:text-blue-600">
-    <AiFillLike className="text-gray-500 pe-0.5" size={28}/>
-    <span className="font-semibold text-lg text-gray-600">Like</span>
-  </div>
-)}
-         <div className="absolute -top-11 left-1/2 -translate-x-1/2 hidden group-hover:flex gap-3 bg-white shadow-md rounded-full px-3 py-2 z-50 max-w-[90vw] sm:max-w-none">
-         
-  <div onClick={() => setReaction("like")} className="cursor-pointer hover:scale-125 transition">
-    <AiFillLike className="text-blue-600" size={28}/>
-    
-  </div>
-  <div onClick={() => setReaction("love")} className="cursor-pointer hover:scale-125 transition">
-   <AiFillHeart className="text-red-600" size={28}/>
-  </div>
-</div>
-         
-          
-        </button>
-       </div>
-        <button  onClick={() => inputRef?.current?.focus()} className="flex flex-row justify-center items-center w-full space-x-3">
-          
-          <div className="font-semibold text-lg flex gap-2 hover:**:text-blue-600 hover:text-blue-600  text-gray-600">
-            <FaRegComment className="text-gray-600 " size={28}/>
-            Comment
-            </div>
-        </button>
-        <button className="hover:**:text-blue-600 hover:text-blue-600 flex flex-row justify-center items-center w-full space-x-3">
-          <RiShareForwardFill className="text-gray-600" size={28}/>
-          <span className="font-semibold text-lg text-gray-600">Share</span>
-        </button>
+      <div className="grid grid-cols-3 w-full px-2 sm:px-5 border-t border-divider pt-3 my-2 text-sm sm:text-base">
+  <div className="relative group">
+    <button className="flex flex-row justify-center items-center w-full space-x-1 sm:space-x-3">
+      {reaction === "like" ? (
+        <div className="flex items-center gap-1 sm:gap-2">
+          <AiFillLike className="text-blue-600 pe-0.5" size={28} />
+          <span className="font-semibold text-gray-600">Like</span>
+        </div>
+      ) : reaction === "love" ? (
+        <div className="flex items-center gap-1 sm:gap-2">
+          <AiFillHeart className="text-red-600" size={28} />
+          <span className="font-semibold text-gray-600">Love</span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-1 sm:gap-2 hover:**:text-blue-600">
+          <AiFillLike className="text-gray-500 pe-0.5" size={28} />
+          <span className="font-semibold text-gray-600">Like</span>
+        </div>
+      )}
+
+      
+      <div
+        className={`absolute -top-11 left-1/2 -translate-x-1/2 gap-3 bg-white shadow-md rounded-full px-3 py-2 z-50 max-w-[90vw] sm:max-w-none
+          ${showReactions ? "flex" : "hidden"} group-hover:flex`}
+      >
+        <div
+          onClick={() => {
+            setReaction("like");
+            setShowReactions(false);
+          }}
+          className="cursor-pointer hover:scale-125 transition"
+        >
+          <AiFillLike className="text-blue-600" size={28} />
+        </div>
+        <div
+          onClick={() => {
+            setReaction("love");
+            setShowReactions(false);
+          }}
+          className="cursor-pointer hover:scale-125 transition"
+        >
+          <AiFillHeart className="text-red-600" size={28} />
+        </div>
       </div>
+    </button>
+  </div>
+
+  <button
+    onClick={() => inputRef?.current?.focus()}
+    className="flex flex-row justify-center items-center w-full space-x-1 sm:space-x-3 hover:**:text-blue-600"
+  >
+    <FaRegComment className="text-gray-600 hover:text-bg-blue-600" size={28} />
+    <span className="">Comment</span>
+  </button>
+
+  <button
+  onClick={() => {
+    const shareUrl = `${window.location.origin}/post/${postId}`;
+    const shareData = {
+      title: "Check this post",
+      text: "Look at this post I found!",
+      url: shareUrl,
+    };
+
+    if (navigator.share) {
+      // ✅ Mobile & modern browsers
+      navigator.share(shareData).catch((err) => console.log("Share canceled", err));
+    } else {
+      // ✅ Fallback for desktop
+      navigator.clipboard.writeText(shareUrl);
+      alert("Post link copied to clipboard!");
+    }
+  }}
+  className="flex flex-row justify-center items-center w-full space-x-1 sm:space-x-3 hover:**:text-blue-600"
+>
+  <RiShareForwardFill className="text-gray-600" size={28} />
+  <span className="font-semibold text-gray-600">Share</span>
+</button>
+
+</div>
+
     </>
   );
 }
+
+

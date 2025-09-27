@@ -30,7 +30,7 @@ export default function Comment({ comment, createdAt, postUserId, callback , pos
   return (
     <div className="p-4 -mx-3 bg-slate-200">
       <div className="w-full flex justify-between items-center">
-        {/* ✅ Use commentator's data */}
+       
         <PostHeader
           photo={post?.user?.photo}
           name={comment.commentCreator?.name}
