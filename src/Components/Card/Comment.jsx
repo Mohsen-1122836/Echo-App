@@ -11,7 +11,7 @@ export default function Comment({ comment, createdAt, postUserId, callback , pos
   const [isEditing, setIsEditing] = useState(false);
   const [newContent, setNewContent] = useState(comment.content);
   const [loading, setLoading] = useState(false);
-  console.log(comment);
+
 
 
   

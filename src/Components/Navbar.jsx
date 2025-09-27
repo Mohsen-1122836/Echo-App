@@ -1,4 +1,6 @@
-import { useContext, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import sun from "/sun.png";
+import moon from "/half-moon.png";
 import {
   Navbar,
   NavbarBrand,
@@ -14,6 +16,8 @@ import { AuthContext } from "./AuthContext";
 
 
 export const AcmeLogo = () => {
+    
+
   return (
     <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
       <path
@@ -27,6 +31,20 @@ export const AcmeLogo = () => {
 };
 
 export default function NavbarUI({ children }) {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
   const { setIsLoggedIn, isLoggedIn, setUserData } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -74,6 +92,16 @@ export default function NavbarUI({ children }) {
               </NavbarItem>
             </>
           )}
+
+<NavbarItem>
+  <Button
+    onPress={toggleTheme}
+    variant="outline"
+  >
+    {theme === "light" ?  <img src={moon} alt="moon" className="w-6 h-6" /> : <img src={sun} alt="sun" className="w-6 h-6 text-shadow-indigo-800" /> }
+  </Button>
+</NavbarItem>
+
 
           <NavbarItem>
             <Link to="/profile">

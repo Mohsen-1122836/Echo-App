@@ -2,27 +2,29 @@ import axios from "axios";
 
 
 
-export async function getAllPostsApi(limit = 10) {
-
-    try {
-        const {data} = await axios.get(`https://linked-posts.routemisr.com/posts?limit=${limit}`,{
+export async function getAllPostsApi(page = 1, limit = 10) {
+  try {
+    const { data } = await axios.get(
+      `https://linked-posts.routemisr.com/posts`,
+      {
         headers: {
-            token: localStorage.getItem('token')
-        } , params: {
-            sort:'-createdAt'
-        }
+          token: localStorage.getItem("token"),
+        },
+        params: {
+          sort: "-createdAt",
+          page,
+          limit,
+        },
+      }
+    );
 
-    })
-   
     return data;
-
-    
-
-
-    } catch (error) {
-        console.log(error);
-    }
+  } catch (err) {
+    console.error(err);
+    return { posts: [] };
+  }
 }
+
 
 export async function getSinglePostApi(id) {
 

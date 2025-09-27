@@ -67,7 +67,7 @@ export default function CreatePost({
   }
 
   return (
-    <div className="bg-white rounded-md shadow-md relative py-3 px-3 my-5 overflow-hidden">
+    <div className="bg-white dark:text-black rounded-md shadow-md relative py-3 px-3 my-5 overflow-hidden">
       <form onSubmit={handleSubmit}>
         <textarea
           value={postContent}

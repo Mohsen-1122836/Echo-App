@@ -3,21 +3,20 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendSignUpData } from "../Services/AuthServices";
-import { Navigate, useNavigate } from "react-router-dom";
-import  registerSchema  from "../Schema/registerSchema";
+import { useNavigate } from "react-router-dom";
+import registerSchema from "../Schema/registerSchema";
 
+registerSchema.refine((data) => data.password === data.rePassword, {
+  message: "Passwords don't match",
+  path: ["rePassword"],
+});
 
-  registerSchema.refine((data) => data.password === data.rePassword, {
-    message: "Passwords don't match",
-    path: ["rePassword"],
-  });
-  export default function Register() {
-
+export default function Register() {
   const [loading, setLoading] = useState(false);
-  const [apiResponse, setApiResponse] = useState('');
+  const [apiResponse, setApiResponse] = useState("");
 
-    const navigate = useNavigate();
-    
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -28,110 +27,121 @@ import  registerSchema  from "../Schema/registerSchema";
       email: "",
       password: "",
       rePassword: "",
-     dateOfBirth: "",
+      dateOfBirth: "",
       gender: "",
     },
     resolver: zodResolver(registerSchema),
   });
-  
-async function signUp(userData) {
-  setLoading(true);
-  const response = await sendSignUpData(userData); // response is now { message: "success" } OR { message: "error text" }
 
-  if (response?.message === "success") {
-  // save credentials in localStorage
-  localStorage.setItem("userCredentials", JSON.stringify({
-    email: userData.email,
-    password: userData.password,
-  }));
+  async function signUp(userData) {
+    setLoading(true);
+    const response = await sendSignUpData(userData);
 
-  setApiResponse("success");
-  setTimeout(() => navigate("/login"), 2000);
-} else {
-  setApiResponse(response?.message);
-}
+    if (response?.message === "success") {
+      localStorage.setItem(
+        "userCredentials",
+        JSON.stringify({
+          email: userData.email,
+          password: userData.password,
+        })
+      );
 
-  setLoading(false);
-}
+      setApiResponse("success");
+      setTimeout(() => navigate("/login"), 2000);
+    } else {
+      setApiResponse(response?.message);
+    }
+
+    setLoading(false);
+  }
 
   return (
-    <>
-     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
-  <div className="bg-white shadow-xl rounded-2xl w-full max-w-2xl p-10 sm:p-16">
-          <h1 className="text-4xl mb-5">register now</h1>
-          <form onSubmit={handleSubmit(signUp)} className="flex flex-col gap-6">
-            <Input
-              isInvalid={Boolean(errors.name)}
-              errorMessage={errors.name?.message}
-              variant="bordered"
-              label="Name"
-              name="name"
-              {...register("name")}
-              type="text"
-            />
-            <Input
-              isInvalid={Boolean(errors.email)}
-              errorMessage={errors.email?.message}
-              variant="bordered"
-              label="Email"
-              name="email"
-              {...register("email")}
-              type="email"
-            />
-            <Input
-              isInvalid={Boolean(errors.password)}
-              errorMessage={errors.password?.message}
-              variant="bordered"
-              label="Password"
-              name="password"
-              {...register("password")}
-              type="password"
-            />
-            <Input
-              isInvalid={Boolean(errors.rePassword)}
-              errorMessage={errors.rePassword?.message}
-              variant="bordered"
-              label="Confirm Password"
-              name="rePassword"
-              {...register("rePassword")}
-              type="password"
-            />
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-950 px-4">
+      <div className="bg-white dark:bg-gray-900 shadow-xl rounded-2xl w-full max-w-2xl p-10 sm:p-16">
+        <h1 className="text-4xl mb-5 text-gray-900 dark:text-gray-100">
+          register now
+        </h1>
+        <form onSubmit={handleSubmit(signUp)} className="flex flex-col gap-6">
+          <Input
+            isInvalid={Boolean(errors.name)}
+            errorMessage={errors.name?.message}
+            variant="bordered"
+            label="Name"
+            {...register("name")}
+            type="text"
+            className="dark:text-gray-100"
+          />
+          <Input
+            isInvalid={Boolean(errors.email)}
+            errorMessage={errors.email?.message}
+            variant="bordered"
+            label="Email"
+            {...register("email")}
+            type="email"
+            className="dark:text-gray-100"
+          />
+          <Input
+            isInvalid={Boolean(errors.password)}
+            errorMessage={errors.password?.message}
+            variant="bordered"
+            label="Password"
+            {...register("password")}
+            type="password"
+            className="dark:text-gray-100"
+          />
+          <Input
+            isInvalid={Boolean(errors.rePassword)}
+            errorMessage={errors.rePassword?.message}
+            variant="bordered"
+            label="Confirm Password"
+            {...register("rePassword")}
+            type="password"
+            className="dark:text-gray-100"
+          />
 
-            <div className="flex flex-col sm:flex-row gap-4 ">
-              {" "}
-              <Input
-                variant="bordered"
-                isInvalid={Boolean(errors.dateOfBirth)}
-                errorMessage={errors.dateOfBirth?.message}
-                label="Date of Birth"
-                name="dateOfBirth"
-                {...register("dateOfBirth")}
-                type="date"
-              />
-              <Select
-                variant="bordered"
-                name="gender"
-                isInvalid={Boolean(errors.gender)}
-                errorMessage={errors.gender?.message}
-                {...register("gender")}
-                label="Select Your Gender"
-              >
-                <SelectItem key="male">Male</SelectItem>
-                <SelectItem key="female">Female</SelectItem>
-              </Select>
-            </div>
-            <Button isLoading={loading} type="submit" color="warning" variant="ghost">
-              Register
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              variant="bordered"
+              isInvalid={Boolean(errors.dateOfBirth)}
+              errorMessage={errors.dateOfBirth?.message}
+              label="Date of Birth"
+              {...register("dateOfBirth")}
+              type="date"
+              className="dark:text-gray-100"
+            />
+            <Select
+              variant="bordered"
+              isInvalid={Boolean(errors.gender)}
+              errorMessage={errors.gender?.message}
+              {...register("gender")}
+              label="Select Your Gender"
+              className="dark:text-gray-100"
+            >
+              <SelectItem key="male">Male</SelectItem>
+              <SelectItem key="female">Female</SelectItem>
+            </Select>
+          </div>
 
+          <Button
+            isLoading={loading}
+            type="submit"
+            color="warning"
+            variant="ghost"
+          >
+            Register
+          </Button>
 
-          {apiResponse === 'success' ? <p className="text-green-500 text-center my-0 capitalize">success</p> : apiResponse && 
-          <p className="text-red-500 text-center my-0 capitalize">{apiResponse}</p>
-          }
-
-          </form>
-        </div>
+          {apiResponse === "success" ? (
+            <p className="text-green-500 text-center my-0 capitalize">success</p>
+          ) : (
+            apiResponse && (
+              <p className="text-red-500 text-center my-0 capitalize">
+                {apiResponse}
+              </p>
+            )
+          )}
+        </form>
       </div>
-    </>
+    </div>
   );
 }
