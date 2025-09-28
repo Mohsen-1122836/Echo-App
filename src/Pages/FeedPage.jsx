@@ -87,7 +87,7 @@ export default function FeedPage() {
 
 
             {loading && (
-              <LoadingScreen/>
+              <LoadingScreen />
             )}
           </>
         )}

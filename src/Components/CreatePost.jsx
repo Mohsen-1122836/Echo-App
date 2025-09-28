@@ -67,12 +67,12 @@ export default function CreatePost({
   }
 
   return (
-    <div className="bg-white dark:text-black rounded-md shadow-md relative py-3 px-3 my-5 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 dark dark:text-gray-100   rounded-md shadow-md relative py-3 px-3 my-5 overflow-hidden">
       <form onSubmit={handleSubmit}>
         <textarea
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
-          className="border border-gray-300 rounded-md p-2 w-full resize-none"
+          className="border dark:border-gray-700 border-gray-300  rounded-md p-2 w-full resize-none"
           rows="4"
           placeholder="What's on your mind?"
         />

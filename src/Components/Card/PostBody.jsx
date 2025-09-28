@@ -11,7 +11,7 @@ export default function PostBody({ body, image, name }) {
       {image && (
         <img
           onClick={onOpen}
-          className="w-full h-96 cursor-pointer object-cover rounded-md my-3"
+          className="w-full h-96 cursor-pointer object-contain rounded-md my-3"
           src={image}
           alt={name}
         />
@@ -40,7 +40,7 @@ export default function PostBody({ body, image, name }) {
             onClick={onClose}
           >
             <img
-              className="w-full h-auto sm:w-[calc(100%-2rem)] m-0 sm:m-auto object-cover max-h-[60vh] p-0 rounded-none sm:rounded-md sm:mx-4"
+              className="w-full h-auto sm:w-[calc(100%-2rem)] m-0 sm:m-auto object-contain max-h-[80vh] p-0 rounded-none sm:rounded-md sm:mx-4"
               src={image}
               alt={name}
               onClick={(e) => e.stopPropagation()} // prevent closing when clicking image

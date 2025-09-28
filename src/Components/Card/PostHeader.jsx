@@ -40,7 +40,7 @@ const {isOpen, onOpen, onClose} = useDisclosure();
       onClick={onClose}
     >
       <img
-        className="  w-full h-auto sm:w-[calc(100%-2rem)] object-cover max-h-[60vh] p-0 m-0 rounded-none sm:rounded-md sm:mx-4 "
+        className="  w-full h-auto sm:w-[calc(100%-2rem)] object-cover max-h-[80vh] p-0 m-0 rounded-none sm:rounded-md sm:mx-4 "
         src={photo}
         alt={name || 'user'}
         onClick={(e) => e.stopPropagation()} // prevent closing when clicking image

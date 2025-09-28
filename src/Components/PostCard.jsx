@@ -50,7 +50,7 @@ export default function PostCard({ post, length, callback }) {
           setIsUpdating={setIsUpdating}
         />
       ) : (
-        <div className="bg-white dark:text-black w-full rounded-md shadow-md h-auto py-3 px-3 my-5 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 dark:text-gray-100 text-gray-900 w-full rounded-md shadow-md h-auto py-3 px-3 my-5 overflow-hidden">
           <div className="w-full h-16 items-center flex justify-between ">
             <PostHeader
               photo={post?.user?.photo}

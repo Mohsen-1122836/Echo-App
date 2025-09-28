@@ -28,7 +28,7 @@ export default function Comment({ comment, createdAt, postUserId, callback , pos
   }
 
   return (
-    <div className="p-4 -mx-3 bg-slate-200">
+    <div className="p-4 -mx-3 dark:bg-gray-800">
       <div className="w-full flex justify-between items-center">
        
         <PostHeader
